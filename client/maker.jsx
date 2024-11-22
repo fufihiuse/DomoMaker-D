@@ -79,6 +79,10 @@ const DomoList = (props) => {
     );
 };
 
+const handlePassChange = () => {
+    console.log('hi!');
+}
+
 const App = () => {
     const [reloadDomos, setReloadDomos] = useState(false);
 
@@ -94,8 +98,35 @@ const App = () => {
     );
 };
 
+const ChangePasswordForm = () => {
+    return (
+        <form id="changePassForm"
+            name="changePassForm"
+            onSubmit={handlePassChange}
+            action="/signup"
+            method="POST"
+            className='mainForm'>
+            <label htmlFor="currPass">Current Password:</label>
+            <input id="prevPass" type="password" name="prevPass" placeholder="password" />
+            <label htmlFor="pass">New Password:</label>
+            <input id="pass" type="password" name="pass" placeholder="password" />
+            <label htmlFor="pass2">New Password:</label>
+            <input id="pass2" type="password" name="pass2" placeholder="retype password" />
+            <input className="formSubmit" type="submit" value="Sign Up" />
+        </form>
+    );
+}
+
 const init = () => {
+    const changePasswordButton = document.getElementById('changePasswordButton');
+
     const root = createRoot(document.getElementById('app'));
+
+    changePasswordButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        root.render(<ChangePasswordForm />);
+        return false;
+    })
     root.render(<App />);
 };
 

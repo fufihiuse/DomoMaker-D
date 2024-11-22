@@ -79,8 +79,25 @@ const DomoList = (props) => {
     );
 };
 
-const handlePassChange = () => {
-    console.log('hi!');
+const handlePassChange = (e) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const pass = e.target.querySelector('#pass').value;
+    const pass2 = e.target.querySelector('#pass2').value;
+
+    if (!pass || !pass2) {
+        helper.handleError('All fields are required!');
+        return false;
+    }
+
+    if (pass !== pass2) {
+        helper.handleError('Passwords do not match!');
+        return false;
+    }
+    helper.sendPost(e.target.action, { pass, pass2 });
+
+    return false;
 }
 
 const App = () => {
@@ -103,16 +120,14 @@ const ChangePasswordForm = () => {
         <form id="changePassForm"
             name="changePassForm"
             onSubmit={handlePassChange}
-            action="/signup"
+            action="/changePassword"
             method="POST"
             className='mainForm'>
-            <label htmlFor="currPass">Current Password:</label>
-            <input id="prevPass" type="password" name="prevPass" placeholder="password" />
             <label htmlFor="pass">New Password:</label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
+            <input id="pass" type="password" name="pass" placeholder="new password" />
             <label htmlFor="pass2">New Password:</label>
             <input id="pass2" type="password" name="pass2" placeholder="retype password" />
-            <input className="formSubmit" type="submit" value="Sign Up" />
+            <input className="formSubmit" type="submit" value="Change" />
         </form>
     );
 }
